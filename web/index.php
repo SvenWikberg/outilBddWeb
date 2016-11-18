@@ -26,5 +26,6 @@
 
             <input type="submit" value="Connection"/>
         </form>
+        <div id="display"></div>
     </body>
 </html>
