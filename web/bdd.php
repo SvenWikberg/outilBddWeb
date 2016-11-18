@@ -22,8 +22,8 @@
     <head>
         <meta charset="utf-8">
         <title>Titre de la page</title>
-        <link rel="stylesheet" href="style.css">
-        <script src="script.js"></script>
+        <!-- <link rel="stylesheet" href="style.css">
+        <script src="script.js"></script> -->
     </head>
     <body>
         <div>
@@ -36,15 +36,24 @@
         <div>
             <?php
                 if(isset($_GET['table'])){
+
+                    $tableData = getTableData($myPDO, $_GET['table']);
+
                     echo '<table>';
-                    foreach(getTableData($myPDO, $_GET['table']) as $tableData){
-                    echo '<tr>'; 
-                        for ($i = 0; $i < count($tableData) / 2; $i++) {
+                    for ($i = 0; $i < count($tableData); $i++) {
+                        $tmp = '';
+                        echo '<tr>'; 
+                        for ($j = 0; $j < count($tableData[$i]) / 2; $j++) {
                             echo '<td style="border: solid black 1px;">';
-                            echo $tableData[$i];
+                            echo $tableData[$i][$j];
                             echo '</td>';
+
+                            $tmp = $tmp . $j . '=' . $tableData[$i][$j] . '&';
                         }
-                    echo '</tr>';
+                        echo '<td>';
+                        echo '<a href="delete.func.php?' . $tmp . 'table_name=' . $_GET['table'] . '">delete</a>';
+                        echo '</td>';
+                        echo '</tr>';
                     }
                     echo '</table>'; 
                 }

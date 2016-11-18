@@ -29,7 +29,12 @@
 
     function getTableData($myPdo, $table){
         $req = $myPdo->prepare('SELECT * FROM ' . $table);
-        //$req->bindParam(':table', $table, PDO::PARAM_STR);
+        $req->execute();
+        return $req->fetchAll();
+    }
+
+    function getTableColumnData($myPdo, $table){
+        $req = $myPdo->prepare('DESCRIBE ' . $table);
         $req->execute();
         return $req->fetchAll();
     }
