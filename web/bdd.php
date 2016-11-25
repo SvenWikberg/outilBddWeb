@@ -45,6 +45,8 @@
 
                     $tableData = getTableData($myPDO, $_GET['table']);
 
+                    $tmp = '';
+
                     echo '<table>';
                     for ($i = 0; $i < count($tableData); $i++) {
                         $tmp = '';
@@ -54,15 +56,19 @@
                             echo $tableData[$i][$j];
                             echo '</td>';
 
-                            $tmp = $tmp . $j . '=' . $tableData[$i][$j] . '&';
+                            $cleaned = $tableData[$i][$j];
+                            $tmp = $tmp . $j . '=' . $cleaned . '&';
                         }
                         echo '<td>';
                         echo '<a href="delete.func.php?' . $tmp . 'table_name=' . $_GET['table'] . '">delete</a>';
+                        echo '</td><td>';
+                        echo '<a href="update.php?' . $tmp . 'table_name=' . $_GET['table'] . '">update</a>';
                         echo '</td>';
                         echo '</tr>';
                     }
                     echo '</table>'; 
                 }
+                echo $tmp;
             ?>
         </div>
     </body>

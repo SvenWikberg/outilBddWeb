@@ -35,4 +35,4 @@
     $req->execute();
     print_rr($req->errorInfo());
     
-    header('Location: bdd.php?table=' . $_GET['table_name'] . '&error=' . $req->errorInfo()[2]);
+   // header('Location: bdd.php?table=' . $_GET['table_name'] . '&error=' . $req->errorInfo()[2]);
