@@ -22,19 +22,25 @@
     <head>
         <meta charset="utf-8">
         <title>Titre de la page</title>
-        <!-- <link rel="stylesheet" href="style.css">
-        <script src="script.js"></script> -->
+        <link rel="stylesheet" href="style.css">
+        <!-- <script src="script.js"></script> -->
     </head>
     <body>
         <div>
             <?php
                 foreach(showTables($myPDO, $_SESSION['bd_name']) as $table){
-                    echo '<a href="?table=' . $table[0] . '"><p style="margin: 0px;">' . $table[0] . '</p></a>';
+                    echo '<a href="?table=' . $table[0] . '"><p style="margin: 0px; width: min-content;">' . $table[0] . '</p></a>';
                 }
             ?>
         </div>
         <div>
             <?php
+                if(isset($_GET['error'])){
+                    if(empty($_GET['error']))
+                        echo '<p>Delete complete</p>';
+                    else
+                        echo '<p>' . $_GET['error'] . '</p>';
+                }
                 if(isset($_GET['table'])){
 
                     $tableData = getTableData($myPDO, $_GET['table']);
