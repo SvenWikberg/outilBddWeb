@@ -39,6 +39,18 @@
         return $req->fetchAll();
     }
 
+    function getDataByPrimaryKey($myPdo, $table, $primaryArray){
+        $tmp = "";
+
+        foreach($primaryArray as $key => $value){
+            $tmp .= $key . ' = "' . $value . '"';
+        }
+
+        $req = $myPdo->prepare('SELECT * FROM ' . $table . ' WHERE ' . $tmp);
+        $req->execute();
+        return $req->fetch(PDO::FETCH_ASSOC);
+    }
+
 
 
 

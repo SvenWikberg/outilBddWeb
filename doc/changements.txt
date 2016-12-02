@@ -1,0 +1,4 @@
+ - delete et update : l'idee etait a lka base de passer tous les champs de la base en GET afin de 
+		      verifier le champ quôn veut delete/update, mais pas beau pas pratique et selon
+		      les caractere des champ ca pue, donc 2eme olution récuperer seulement les clé 
+		      primaires et les passer en get, c'est suffisant.

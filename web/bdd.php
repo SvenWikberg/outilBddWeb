@@ -37,27 +37,50 @@
             <?php
                 if(isset($_GET['error'])){
                     if(empty($_GET['error']))
-                        echo '<p>Delete complete</p>';
+                        echo '<p>Delete/Update complete</p>';
                     else
                         echo '<p>' . $_GET['error'] . '</p>';
                 }
                 if(isset($_GET['table'])){
 
                     $tableData = getTableData($myPDO, $_GET['table']);
+                    $tableColumnData = getTableColumnData($myPDO, $_GET['table']);
+                    $primaryKeys = array();
 
-                    $tmp = '';
+                    $cpt = 0;
+                    foreach($tableColumnData as $column){
+                        //print_rr($column);
+                        if($column['Key'] == "PRI"){
+                            array_push($primaryKeys, $column['Field'], $cpt);
+                        }
+                        $cpt++;
+                    }
+
+
+                    //print_rr($primaryKeys);
+                    //print_rr($tableData);
+
+                    $tmp = "";
+                    
 
                     echo '<table>';
                     for ($i = 0; $i < count($tableData); $i++) {
-                        $tmp = '';
+
+                        $cpt = 0;
+                        foreach($primaryKeys as $primaryKey){
+                            if($cpt % 2 == 0){
+                                $tmp .= $primaryKey . "=";
+                            } else {
+                                $tmp .= $tableData[$i][$primaryKey] . "&";
+                            }
+                            $cpt++;
+                        }
+
                         echo '<tr>'; 
                         for ($j = 0; $j < count($tableData[$i]) / 2; $j++) {
                             echo '<td style="border: solid black 1px;">';
                             echo $tableData[$i][$j];
                             echo '</td>';
-
-                            $cleaned = $tableData[$i][$j];
-                            $tmp = $tmp . $j . '=' . $cleaned . '&';
                         }
                         echo '<td>';
                         echo '<a href="delete.func.php?' . $tmp . 'table_name=' . $_GET['table'] . '">delete</a>';
@@ -65,6 +88,7 @@
                         echo '<a href="update.php?' . $tmp . 'table_name=' . $_GET['table'] . '">update</a>';
                         echo '</td>';
                         echo '</tr>';
+                        $tmp = "";
                     }
                     echo '</table>'; 
                 }
