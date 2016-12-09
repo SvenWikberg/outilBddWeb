@@ -41,10 +41,9 @@
             //print_rr($recordData);
 
             foreach($recordData as $key => $field){
-
                 $cleared = htmlspecialchars($field, ENT_QUOTES);
-
-                echo '<input style="width: 100%;" type="text" name="' . $key . '" value="' . $cleared . '"><br>';
+                echo '<p style="margin-bottom: 0px;">' . $key . ':</p>';
+                echo '<input style="width: 100%;" type="text" name="' . $key . '" value="' . $cleared . '"><br><br>';
             }
 
             echo '<input type="hidden" name="table_name" value="' .  $_GET['table_name'] . '">';

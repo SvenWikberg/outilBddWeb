@@ -37,7 +37,7 @@
             <?php
                 if(isset($_GET['error'])){
                     if(empty($_GET['error']))
-                        echo '<p>Delete/Update complete</p>';
+                        echo '<p>Delete/Update completed</p>';
                     else
                         echo '<p>' . $_GET['error'] . '</p>';
                 }
@@ -58,29 +58,36 @@
 
 
                     //print_rr($primaryKeys);
-                    //print_rr($tableData);
+                    //print_rr($tableColumnData);
 
                     $tmp = "";
-                    
+                    $firstLineCheck = false;
 
                     echo '<table>';
-                    for ($i = 0; $i < count($tableData); $i++) {
-
-                        $cpt = 0;
-                        foreach($primaryKeys as $primaryKey){
-                            if($cpt % 2 == 0){
-                                $tmp .= $primaryKey . "=";
-                            } else {
-                                $tmp .= $tableData[$i][$primaryKey] . "&";
+                    for ($i = -1; $i < count($tableData); $i++) {
+                        if($i !=  -1){ 
+                            $cpt = 0;
+                            foreach($primaryKeys as $primaryKey){
+                                if($cpt % 2 == 0){
+                                    $tmp .= $primaryKey . "=";
+                                } else {
+                                    $tmp .= $tableData[$i][$primaryKey] . "&";
+                                }
+                                $cpt++;
                             }
-                            $cpt++;
                         }
 
                         echo '<tr>'; 
-                        for ($j = 0; $j < count($tableData[$i]) / 2; $j++) {
-                            echo '<td style="border: solid black 1px;">';
-                            echo $tableData[$i][$j];
-                            echo '</td>';
+                        for ($j = 0; $j < count($tableColumnData); $j++) {
+                            if($i ==  -1){ // -1 est la premiere ligne, la ligne ou on affiche les noms des colonnes
+                                echo '<td style="border: solid black 2px;">';
+                                echo $tableColumnData[$j]['Field'];
+                                echo '</td>';
+                            } else {
+                                echo '<td style="border: solid black 1px;">';
+                                echo $tableData[$i][$j];
+                                echo '</td>';
+                            }
                         }
                         echo '<td>';
                         echo '<a href="delete.func.php?' . $tmp . 'table_name=' . $_GET['table'] . '">delete</a>';
@@ -91,8 +98,8 @@
                         $tmp = "";
                     }
                     echo '</table>'; 
-                }
-                echo $tmp;
+                    echo '<p><a href="insert.php?table=' . $_GET['table'] . '">insert</a></p>';
+                } 
             ?>
         </div>
     </body>

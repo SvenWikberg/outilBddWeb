@@ -33,6 +33,12 @@
         return $req->fetchAll();
     }
 
+    function getTableDataAssoc($myPdo, $table){
+        $req = $myPdo->prepare('SELECT * FROM ' . $table);
+        $req->execute();
+        return $req->fetch(PDO::FETCH_ASSOC);
+    }
+
     function getTableColumnData($myPdo, $table){
         $req = $myPdo->prepare('DESCRIBE ' . $table);
         $req->execute();
